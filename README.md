@@ -9,7 +9,7 @@ Customers order on WhatsApp, pay with an M-Pesa STK Push, and the order lands in
 
 
 ## What it does
-- Takes orders by chat (demo shop: "Demo Electronics")
+- Takes orders by chat (demo shop: "Koja Electronics")
 - Sends an STK Push payment prompt and confirms payment from the M-Pesa callback
 - Logs every order to Google Sheets (Pending -> Paid) and sends a WhatsApp receipt
 - Stores the `CheckoutRequestID` on the order row, so pending payments survive restarts
