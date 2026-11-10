@@ -6,7 +6,7 @@ Customers order on WhatsApp, pay with an M-Pesa STK Push, and the order lands in
 > Daraja sandbox. Production use needs a verified WhatsApp sender and Daraja Go-Live
 > on the business's own paybill or till.
 
-**Demo video:** <link>  &nbsp;|&nbsp; ![demo](demo.gif)
+
 
 ## What it does
 - Takes orders by chat (demo shop: "Demo Electronics")
