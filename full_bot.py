@@ -70,7 +70,7 @@ TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
 TWILIO_WHATSAPP_NUMBER = os.getenv("TWILIO_WHATSAPP_NUMBER")
 
 REQUIRED_ENV = ["SHEET_ID", "MPESA_CONSUMER_KEY", "MPESA_CONSUMER_SECRET",
-                "MPESA_SHORTCODE", "MPESA_PASSKEY", "MPESA_CALLBACK_URL",
+                "MPESA_SHORTCODE", "MPESA_PASSKEY", "PUBLIC_BASE_URL",
                 "TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN", "TWILIO_WHATSAPP_NUMBER"]
 missing = [k for k in REQUIRED_ENV if not os.getenv(k)]
 if missing:
@@ -214,14 +214,33 @@ def update_sheet(row_number, paid, receipt):
     ).execute()
 
 
+
+
+
+def as_whatsapp(number):
+    #return a number in Twilio's "whatsapp:+2547XXXXXXXXX" format, whatever the user sent.
+    n = (number or "").strip().replace(" ", "")
+    if n.startswith("whatsapp:"):
+        n = n[len("whatsapp:"):]
+    if not n:
+        raise ValueError("empty WhatsApp number")
+    if not n.startswith("+"):
+        n = "+" + n
+    return f"whatsapp:{n}"
+
+
+
+
+
 def send_whatsapp_message(to_number, body_text):
     """to_number must already be in 'whatsapp:+254XXXXXXXXX' format (from_number
     as received from Twilio already looks like this)."""
     twilio_client.messages.create(
         from_=TWILIO_WHATSAPP_NUMBER,
-        to=to_number,
+        to=as_whatsapp(to_number),
         body=body_text
     )
+
 
 
 def to_mpesa_phone_format(whatsapp_from):
